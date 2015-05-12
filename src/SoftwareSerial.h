@@ -1,11 +1,11 @@
 /*
-SoftwareSerial.h (formerly NewSoftSerial.h) - 
+SoftwareSerial.h (formerly NewSoftSerial.h) -
 Multi-instance software serial library for Arduino/Wiring
 -- Interrupt-driven receive and other improvements by ladyada
    (http://ladyada.net)
 -- Tuning, circular buffer, derivation from class Print/Stream,
    multi-instance support, porting to 8MHz processors,
-   various optimizations, PROGMEM delay tables, inverse logic and 
+   various optimizations, PROGMEM delay tables, inverse logic and
    direct port writing by Mikal Hart (http://www.arduiniana.org)
 -- Pin change interrupt macros by Paul Stoffregen (http://www.pjrc.com)
 -- 20MHz processor support by Garrett Mace (http://www.macetech.com)
@@ -63,7 +63,7 @@ private:
   uint16_t _inverse_logic:1;
 
   // static data
-  static char _receive_buffer[_SS_MAX_RX_BUFF]; 
+  static char _receive_buffer[_SS_MAX_RX_BUFF];
   static volatile uint8_t _receive_buffer_tail;
   static volatile uint8_t _receive_buffer_head;
   static SoftwareSerial *active_object;
@@ -93,12 +93,42 @@ public:
   virtual int read();
   virtual int available();
   virtual void flush();
-  
+
   using Print::write;
 
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
 };
+
+#define CSERIAL_5N1 501
+#define CSERIAL_6N1 601
+#define CSERIAL_7N1 701
+#define CSERIAL_8N1 801
+
+#define CSERIAL_5N2 502
+#define CSERIAL_6N2 602
+#define CSERIAL_7N2 702
+#define CSERIAL_8N2 802
+
+#define CSERIAL_5O1 511
+#define CSERIAL_6O1 611
+#define CSERIAL_7O1 711
+#define CSERIAL_8O1 811
+
+#define CSERIAL_5O2 512
+#define CSERIAL_6O2 612
+#define CSERIAL_7O2 712
+#define CSERIAL_8O2 812
+
+#define CSERIAL_5E1 521
+#define CSERIAL_6E1 621
+#define CSERIAL_7E1 721
+#define CSERIAL_8E1 821
+
+#define CSERIAL_5E2 522
+#define CSERIAL_6E2 622
+#define CSERIAL_7E2 722
+#define CSERIAL_8E2 822
 
 // Arduino 0012 workaround
 #undef int
