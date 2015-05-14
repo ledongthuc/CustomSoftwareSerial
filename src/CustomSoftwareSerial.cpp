@@ -236,9 +236,17 @@ void CustomSoftwareSerial::recv()
         d &= noti;
     }
 
+    // skip the parity bit
+    if(this->_parityBit != NONE) {
+        tunedDelay(_rx_delay_stopbit);
+        DebugPulse(_DEBUG_PIN2, 1);
+    }
+
     // skip the stop bit
-    tunedDelay(_rx_delay_stopbit);
-    DebugPulse(_DEBUG_PIN2, 1);
+    for(uint8_t i = 0; i < this->_numberOfStopBit; i ++) {
+        tunedDelay(_rx_delay_stopbit);
+        DebugPulse(_DEBUG_PIN2, 1);
+    }
 
     if (_inverse_logic)
       d = ~d;
