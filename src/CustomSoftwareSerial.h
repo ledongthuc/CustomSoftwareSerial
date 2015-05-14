@@ -1,5 +1,5 @@
 /*
-SoftwareSerial.h (formerly NewSoftSerial.h) -
+CustomSoftwareSerial.h (formerly NewSoftSerial.h) -
 Multi-instance software serial library for Arduino/Wiring
 -- Interrupt-driven receive and other improvements by ladyada
    (http://ladyada.net)
@@ -29,8 +29,8 @@ The latest version of this library can always be found at
 http://arduiniana.org.
 */
 
-#ifndef SoftwareSerial_h
-#define SoftwareSerial_h
+#ifndef CustomSoftwareSerial_h
+#define CustomSoftwareSerial_h
 
 #include <inttypes.h>
 #include <Stream.h>
@@ -80,7 +80,7 @@ enum Parity {
     EVEN = 2
 };
 
-class SoftwareSerial : public Stream
+class CustomSoftwareSerial : public Stream
 {
 private:
   // per object data
@@ -106,7 +106,7 @@ private:
   static char _receive_buffer[_SS_MAX_RX_BUFF];
   static volatile uint8_t _receive_buffer_tail;
   static volatile uint8_t _receive_buffer_head;
-  static SoftwareSerial *active_object;
+  static CustomSoftwareSerial *active_object;
 
   // private methods
   void recv();
@@ -122,8 +122,8 @@ private:
 
 public:
   // public methods
-  SoftwareSerial(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic = false);
-  ~SoftwareSerial();
+  CustomSoftwareSerial(uint8_t receivePin, uint8_t transmitPin, bool inverse_logic = false);
+  ~CustomSoftwareSerial();
   void begin(long speed);
   void begin(long speed, uint16_t configuration);
   bool listen();
