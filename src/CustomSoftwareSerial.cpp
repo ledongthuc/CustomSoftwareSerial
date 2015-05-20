@@ -42,6 +42,7 @@ http://arduiniana.org.
 #include <avr/pgmspace.h>
 #include <Arduino.h>
 #include <CustomSoftwareSerial.h>
+#include <math.h>
 //
 // Lookup table
 //
@@ -225,7 +226,7 @@ void CustomSoftwareSerial::recv()
     DebugPulse(_DEBUG_PIN2, 1);
 
     // Read each of the 8 bits
-    for (uint8_t i=0x1; i; i <<= 1)
+    for (uint8_t i=0x1; i || i <= pow(2, this->_numberOfDataBit - 1); i <<= 1)
     {
       tunedDelay(_rx_delay_intrabit);
       DebugPulse(_DEBUG_PIN2, 1);
