@@ -135,6 +135,9 @@ public:
   uint8_t getNumberOfDataBit();
   Parity getParity();
   uint8_t getNumberOfStopBit();
+  uint8_t calculateNumberOfBits1(uint8_t sentData);
+  void writeStopBits();
+  void writeParityBits(uint8_t numberOfBit1);
 
   virtual size_t write(uint8_t byte);
   virtual int read();

@@ -472,10 +472,12 @@ size_t CustomSoftwareSerial::write(uint8_t b)
   tx_pin_write(_inverse_logic ? HIGH : LOW);
   tunedDelay(_tx_delay + XMIT_START_ADJUSTMENT);
 
+  uint8_t numberOfBits1 = calculateNumberOfBits1(b);
+
   // Write each of the 8 bits
   if (_inverse_logic)
   {
-    for (byte mask = 0x01; mask; mask <<= 1)
+    for (byte mask = 0x01; mask && mask <= pow(2, this->_numberOfDataBit - 1); mask <<= 1)
     {
       if (b & mask) // choose bit
         tx_pin_write(LOW); // send 1
@@ -485,11 +487,10 @@ size_t CustomSoftwareSerial::write(uint8_t b)
       tunedDelay(_tx_delay);
     }
 
-    tx_pin_write(LOW); // restore pin to natural state
   }
   else
   {
-    for (byte mask = 0x01; mask; mask <<= 1)
+    for (byte mask = 0x01; mask && mask <= pow(2, this->_numberOfDataBit - 1); mask <<= 1)
     {
       if (b & mask) // choose bit
         tx_pin_write(HIGH); // send 1
@@ -499,8 +500,11 @@ size_t CustomSoftwareSerial::write(uint8_t b)
       tunedDelay(_tx_delay);
     }
 
-    tx_pin_write(HIGH); // restore pin to natural state
   }
+
+  writeParityBits(numberOfBits1);
+  tunedDelay(_tx_delay);
+  writeStopBits();
 
   SREG = oldSREG; // turn interrupts back on
   tunedDelay(_tx_delay);
@@ -548,4 +552,59 @@ Parity CustomSoftwareSerial::getParity() {
 
 uint8_t CustomSoftwareSerial::getNumberOfStopBit() {
     return this->_numberOfStopBit;
+}
+
+void CustomSoftwareSerial::writeParityBits(uint8_t numberOfBit1) {
+    if(this->_parityBit == NONE) {
+        return;
+    }
+
+    if((this->_parityBit == EVEN &&  (numberOfBit1 & 0x01) && !_inverse_logic) ||
+       (this->_parityBit == EVEN && !(numberOfBit1 & 0x01) &&  _inverse_logic) ||
+       (this->_parityBit == ODD  &&  (numberOfBit1 & 0x01) &&  _inverse_logic) ||
+       (this->_parityBit == ODD  && !(numberOfBit1 & 0x01) && !_inverse_logic)) {
+        tx_pin_write(HIGH); // send 1
+    }
+
+    if((this->_parityBit == ODD  &&  (numberOfBit1 & 0x01) && !_inverse_logic) ||
+       (this->_parityBit == ODD  && !(numberOfBit1 & 0x01) &&  _inverse_logic) ||
+       (this->_parityBit == EVEN &&  (numberOfBit1 & 0x01) &&  _inverse_logic) ||
+       (this->_parityBit == EVEN && !(numberOfBit1 & 0x01) && !_inverse_logic)) {
+        tx_pin_write(LOW); // send 1
+    }
+
+
+
+    if(this->_parityBit == ODD) {
+        if(numberOfBit1 & 0x01 && !_inverse_logic) {
+          tx_pin_write(LOW); // send 0
+          return;
+        }
+
+        if(numberOfBit1 & 0x01 && _inverse_logic) {
+          tx_pin_write(HIGH); // send 1
+          return;
+        }
+
+    }
+}
+
+void CustomSoftwareSerial::writeStopBits() {
+    for(int8_t stopBitIndex = 0; stopBitIndex < 2; stopBitIndex++) {
+        if(_inverse_logic) {
+            tx_pin_write(LOW);
+        } else {
+            tx_pin_write(HIGH);
+        }
+    }
+}
+
+uint8_t CustomSoftwareSerial::calculateNumberOfBits1(uint8_t sentData) {
+    uint8_t numberOfBit1 = 0;
+    uint8_t index;
+    for (index = 0x80; index; index >>= 1) {
+        if (sentData & index) numberOfBit1++;
+    }
+
+    return numberOfBit1;
 }
