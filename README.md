@@ -1,8 +1,5 @@
 # CustomSoftwareSerial
-Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow to configure and custom parity bit, stop bits and data's bit to make the lib more useful. The library bases on Arduino's SoftwareSerial.
-
-# Little story
-A sunny day, I implement an library to control BLE HM-10 module through serial port but I recognize the Arduino's SoftwareSerial doesn't support parity bit. It also only support one stop bit instead two. This is short story why I create this project
+Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow to configure and custom parity bit, stop bits and data's bit. Hope it useful for you.
 
 # Quick tutorial
 ```cpp
@@ -207,3 +204,6 @@ void printPort() {
   Serial.println("");
 }
 ```
+
+# Little story
+A sunny day, I implement an library to control BLE HM-10 module through serial port but I recognize the Arduino's SoftwareSerial doesn't support parity bit. It also only support one stop bit instead two. This is short story why I create this project
