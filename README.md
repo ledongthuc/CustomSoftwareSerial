@@ -24,24 +24,24 @@ void loop() {
 ```
 
 To use CustomSoftwareSerial, we follow steps:
-0. Inlucde CustomSoftwareSerial library
+
+* Inlucde CustomSoftwareSerial library
 ```cpp
 #include <CustomSoftwareSerial.h>
 ```
-
-1. Declare pointer of CustomSoftwareSerial
+* Declare pointer of CustomSoftwareSerial
 ```cpp
 CustomSoftwareSerial* customSerial;
 ```
-2. Initial CustomSoftwareSerial with rx/tx pins
+* Initial CustomSoftwareSerial with rx/tx pins
 ```cpp
 customSerial = new CustomSoftwareSerial(9, 10);
 ```
-3. Begin with baudrate and configuration
+* Begin with baudrate and configuration
 ```cpp
 customSerial->begin(9600, CSERIAL_8N1); //Baud rate: 9600, configuration: CSERIAL_8N1
 ```
-4. Write data through CustomSoftwareSerial object
+* Write data through CustomSoftwareSerial object
 ```cpp
 customSerial->write("Test message");
 ```
@@ -76,7 +76,7 @@ Currently, we support configurations:
 | CSERIAL_7E2 | 7                   | Even       | 2                  |
 | CSERIAL_8E2 | 8                   | Even       | 2                  |
 
-# Testing suite
+# Testing
 ## Test Configuration
 ```cpp
 #include <CustomSoftwareSerial.h>
