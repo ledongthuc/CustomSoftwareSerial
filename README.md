@@ -208,4 +208,6 @@ void printPort() {
 ```
 
 # Little story
-A sunny day, I implement an library to control BLE HM-10 module through serial port but I recognize the Arduino's SoftwareSerial doesn't support parity bit. It also only support one stop bit instead two. This is short story why I create this project
+A sunny day, I implement an library to control BLE HM-10 module through serial port but I recognize the Arduino's SoftwareSerial doesn't support parity bit. The stop bit only support one. So, I create and share this project for someone who need it. 
+
+If you got any problem or question, let me know. Thanks
