@@ -1,37 +1,6 @@
 # CustomSoftwareSerial
 Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow to configure and custom parity bit, stop bits and data's bit to make the lib more useful. The library bases on Arduino's SoftwareSerial.
 
-# Supported Configuration
-Currently, we support configurations:
-
-| Name        | Number of data bits | Parity bit | Number of stop bit |
-|:-----------:|:-------------------:|:----------:|:------------------:|
-| CSERIAL_5N1 | 5                   | None       | 1                  |
-| CSERIAL_6N1 | 6                   | None       | 1                  |
-| CSERIAL_7N1 | 7                   | None       | 1                  |
-| CSERIAL_8N1 | 8                   | None       | 1                  |
-| CSERIAL_5N2 | 5                   | None       | 2                  |
-| CSERIAL_6N2 | 6                   | None       | 2                  |
-| CSERIAL_7N2 | 7                   | None       | 2                  |
-| CSERIAL_8N2 | 8                   | None       | 2                  |
-| CSERIAL_5O1 | 5                   | Odd        | 1                  |
-| CSERIAL_6O1 | 6                   | Odd        | 1                  |
-| CSERIAL_7O1 | 7                   | Odd        | 1                  |
-| CSERIAL_8O1 | 8                   | Odd        | 1                  |
-| CSERIAL_5O2 | 5                   | Odd        | 2                  |
-| CSERIAL_6O2 | 6                   | Odd        | 2                  |
-| CSERIAL_7O2 | 7                   | Odd        | 2                  |
-| CSERIAL_8O2 | 8                   | Odd        | 2                  |
-| CSERIAL_5E1 | 5                   | Even       | 1                  |
-| CSERIAL_6E1 | 6                   | Even       | 1                  |
-| CSERIAL_7E1 | 7                   | Even       | 1                  |
-| CSERIAL_8E1 | 8                   | Even       | 1                  |
-| CSERIAL_5E2 | 5                   | Even       | 2                  |
-| CSERIAL_6E2 | 6                   | Even       | 2                  |
-| CSERIAL_7E2 | 7                   | Even       | 2                  |
-| CSERIAL_8E2 | 8                   | Even       | 2                  |
-
-
 # Little story
 A sunny day, I implement an library to control BLE HM-10 module through serial port but I recognize the Arduino's SoftwareSerial doesn't support parity bit. It also only support one stop bit instead two. This is short story why I create this project
 
@@ -79,6 +48,36 @@ customSerial->begin(9600, CSERIAL_8N1); //Baud rate: 9600, configuration: CSERIA
 ```cpp
 customSerial->write("Test message");
 ```
+
+# Supported Configuration
+Currently, we support configurations:
+
+| Name        | Number of data bits | Parity bit | Number of stop bit |
+|:-----------:|:-------------------:|:----------:|:------------------:|
+| CSERIAL_5N1 | 5                   | None       | 1                  |
+| CSERIAL_6N1 | 6                   | None       | 1                  |
+| CSERIAL_7N1 | 7                   | None       | 1                  |
+| CSERIAL_8N1 | 8                   | None       | 1                  |
+| CSERIAL_5N2 | 5                   | None       | 2                  |
+| CSERIAL_6N2 | 6                   | None       | 2                  |
+| CSERIAL_7N2 | 7                   | None       | 2                  |
+| CSERIAL_8N2 | 8                   | None       | 2                  |
+| CSERIAL_5O1 | 5                   | Odd        | 1                  |
+| CSERIAL_6O1 | 6                   | Odd        | 1                  |
+| CSERIAL_7O1 | 7                   | Odd        | 1                  |
+| CSERIAL_8O1 | 8                   | Odd        | 1                  |
+| CSERIAL_5O2 | 5                   | Odd        | 2                  |
+| CSERIAL_6O2 | 6                   | Odd        | 2                  |
+| CSERIAL_7O2 | 7                   | Odd        | 2                  |
+| CSERIAL_8O2 | 8                   | Odd        | 2                  |
+| CSERIAL_5E1 | 5                   | Even       | 1                  |
+| CSERIAL_6E1 | 6                   | Even       | 1                  |
+| CSERIAL_7E1 | 7                   | Even       | 1                  |
+| CSERIAL_8E1 | 8                   | Even       | 1                  |
+| CSERIAL_5E2 | 5                   | Even       | 2                  |
+| CSERIAL_6E2 | 6                   | Even       | 2                  |
+| CSERIAL_7E2 | 7                   | Even       | 2                  |
+| CSERIAL_8E2 | 8                   | Even       | 2                  |
 
 # Testing suite
 ## Test Configuration
