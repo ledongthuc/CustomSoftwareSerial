@@ -33,17 +33,14 @@ To use CustomSoftwareSerial, we follow steps:
 ```cpp
 CustomSoftwareSerial* customSerial;
 ```
-
 2. Initial CustomSoftwareSerial with rx/tx pins
 ```cpp
 customSerial = new CustomSoftwareSerial(9, 10);
 ```
-
 3. Begin with baudrate and configuration
 ```cpp
 customSerial->begin(9600, CSERIAL_8N1); //Baud rate: 9600, configuration: CSERIAL_8N1
 ```
-
 4. Write data through CustomSoftwareSerial object
 ```cpp
 customSerial->write("Test message");
