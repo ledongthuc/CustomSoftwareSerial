@@ -1,7 +1,8 @@
 # CustomSoftwareSerial
-Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow to configure and custom parity bit, stop bits and data's bit. Hope it useful for you.
+Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow you configure and custom parity bit, stop bits and number of data bits. Hope it useful for you.
 
 # Quick tutorial
+Simple demo to use CustomSoftwareSerial
 ```cpp
 #include <CustomSoftwareSerial.h>
 
@@ -31,7 +32,7 @@ void loop() {
 ```
 
 # Supported Configuration
-Currently, we support configurations:
+We support configurations to setup stop bit, parity bit and number of data bits:
 
 | Name        | Number of data bits | Parity bit | Number of stop bit |
 |:-----------:|:-------------------:|:----------:|:------------------:|
@@ -62,6 +63,7 @@ Currently, we support configurations:
 
 # Testing
 ## Test Configuration
+Testing demo to test configuration's values
 ```cpp
 #include <CustomSoftwareSerial.h>
 
