@@ -8,42 +8,29 @@ A sunny day, I implement an library to control BLE HM-10 module through serial p
 ```cpp
 #include <CustomSoftwareSerial.h>
 
-// Declare serial
-CustomSoftwareSerial* customSerial;
+CustomSoftwareSerial* customSerial;               // Declare serial
 
 // Init value
 void setup() {
-  customSerial = new CustomSoftwareSerial(9, 10); //rx, tx
-  customSerial->begin(9600, CSERIAL_8N1);         //Baud rate: 9600, configuration: CSERIAL_8N1
+  Serial.begin(57600);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+  }
+  Serial.write("Hello World");
+
+  customSerial = new CustomSoftwareSerial(9, 10); // rx, tx
+  customSerial->begin(9600, CSERIAL_8N1);         // Baud rate: 9600, configuration: CSERIAL_8N1
+  customSerial->write("Test message");            // Write testing data
 }
 
 void loop() {
-  customSerial->write("Test message");
+  if (customSerial->available())
+    Serial.write(customSerial->read());
+  if (Serial.available())
+    customSerial->write(Serial.read());
+
   delay(1000);
 }
-```
-
-To use CustomSoftwareSerial, we follow steps:
-
-* Inlucde CustomSoftwareSerial library
-```cpp
-#include <CustomSoftwareSerial.h>
-```
-* Declare pointer of CustomSoftwareSerial
-```cpp
-CustomSoftwareSerial* customSerial;
-```
-* Initial CustomSoftwareSerial with rx/tx pins
-```cpp
-customSerial = new CustomSoftwareSerial(9, 10);
-```
-* Begin with baudrate and configuration
-```cpp
-customSerial->begin(9600, CSERIAL_8N1); //Baud rate: 9600, configuration: CSERIAL_8N1
-```
-* Write data through CustomSoftwareSerial object
-```cpp
-customSerial->write("Test message");
 ```
 
 # Supported Configuration
