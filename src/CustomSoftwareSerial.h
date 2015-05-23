@@ -98,9 +98,11 @@ private:
   uint16_t _buffer_overflow:1;
   uint16_t _inverse_logic:1;
 
-  uint8_t _numberOfDataBit;
-  Parity _parityBit;
-  uint8_t _numberOfStopBit;
+  static uint8_t _numberOfDataBit;
+  static uint8_t _maxValueOfDataBit;
+  static Parity _parityBit;
+  static uint8_t _numberOfStopBit;
+
 
   // static data
   static char _receive_buffer[_SS_MAX_RX_BUFF];

@@ -137,6 +137,11 @@ CustomSoftwareSerial *CustomSoftwareSerial::active_object = 0;
 char CustomSoftwareSerial::_receive_buffer[_SS_MAX_RX_BUFF];
 volatile uint8_t CustomSoftwareSerial::_receive_buffer_tail = 0;
 volatile uint8_t CustomSoftwareSerial::_receive_buffer_head = 0;
+uint8_t CustomSoftwareSerial::_numberOfDataBit = 8;
+Parity CustomSoftwareSerial::_parityBit = NONE;
+uint8_t CustomSoftwareSerial::_numberOfStopBit = 1;
+uint8_t CustomSoftwareSerial::_maxValueOfDataBit = 128;
+
 
 //
 // Debugging
@@ -225,16 +230,16 @@ void CustomSoftwareSerial::recv()
     tunedDelay(_rx_delay_centering);
     DebugPulse(_DEBUG_PIN2, 1);
 
-    // Read each of the 8 bits
-    for (uint8_t i=0x1; i || i <= pow(2, this->_numberOfDataBit - 1); i <<= 1)
+    for (uint8_t i=0x1; i && i <= this->_maxValueOfDataBit; i <<= 1)
     {
       tunedDelay(_rx_delay_intrabit);
       DebugPulse(_DEBUG_PIN2, 1);
       uint8_t noti = ~i;
-      if (rx_pin_read())
+      if (rx_pin_read()) {
         d |= i;
-      else // else clause added to ensure function timing is ~balanced
+      } else { // else clause added to ensure function timing is ~balanced
         d &= noti;
+      }
     }
 
     // skip the parity bit
@@ -473,11 +478,12 @@ size_t CustomSoftwareSerial::write(uint8_t b)
   tunedDelay(_tx_delay + XMIT_START_ADJUSTMENT);
 
   uint8_t numberOfBits1 = calculateNumberOfBits1(b);
+  uint8_t maxValueOfData = round(pow(2, this->_numberOfDataBit - 1));
 
   // Write each of the 8 bits
   if (_inverse_logic)
   {
-    for (byte mask = 0x01; mask && mask <= pow(2, this->_numberOfDataBit - 1); mask <<= 1)
+    for (byte mask = 0x01; mask && mask <= this->_maxValueOfDataBit; mask <<= 1)
     {
       if (b & mask) // choose bit
         tx_pin_write(LOW); // send 1
@@ -490,7 +496,7 @@ size_t CustomSoftwareSerial::write(uint8_t b)
   }
   else
   {
-    for (byte mask = 0x01; mask && mask <= pow(2, this->_numberOfDataBit - 1); mask <<= 1)
+    for (byte mask = 0x01; mask && mask <= this->_maxValueOfDataBit; mask <<= 1)
     {
       if (b & mask) // choose bit
         tx_pin_write(HIGH); // send 1
@@ -538,6 +544,7 @@ int CustomSoftwareSerial::peek()
 
 void CustomSoftwareSerial::setPort(uint16_t configuration) {
     this->_numberOfDataBit = (uint8_t)(configuration / 100);
+    this->_maxValueOfDataBit = round(pow(2, this->_numberOfDataBit - 1));
     this->_parityBit =       (Parity)(configuration % 100 / 10);
     this->_numberOfStopBit = (uint8_t)(configuration % 10);
 }
