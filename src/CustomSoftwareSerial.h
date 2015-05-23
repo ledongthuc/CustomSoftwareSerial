@@ -98,10 +98,10 @@ private:
   uint16_t _buffer_overflow:1;
   uint16_t _inverse_logic:1;
 
-  static uint8_t _numberOfDataBit;
-  static uint8_t _maxValueOfDataBit;
-  static Parity _parityBit;
-  static uint8_t _numberOfStopBit;
+  uint8_t _numberOfDataBit;
+  uint8_t _maxValueOfDataBit;
+  Parity _parityBit;
+  uint8_t _numberOfStopBit;
 
 
   // static data

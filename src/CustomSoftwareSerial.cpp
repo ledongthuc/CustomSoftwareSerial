@@ -137,10 +137,6 @@ CustomSoftwareSerial *CustomSoftwareSerial::active_object = 0;
 char CustomSoftwareSerial::_receive_buffer[_SS_MAX_RX_BUFF];
 volatile uint8_t CustomSoftwareSerial::_receive_buffer_tail = 0;
 volatile uint8_t CustomSoftwareSerial::_receive_buffer_head = 0;
-uint8_t CustomSoftwareSerial::_numberOfDataBit = 8;
-Parity CustomSoftwareSerial::_parityBit = NONE;
-uint8_t CustomSoftwareSerial::_numberOfStopBit = 1;
-uint8_t CustomSoftwareSerial::_maxValueOfDataBit = 128;
 
 
 //
