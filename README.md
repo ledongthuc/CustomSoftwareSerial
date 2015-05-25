@@ -4,7 +4,7 @@ Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow you co
 You can download from  [v1.0.tar.gz](https://github.com/ledongthuc/CustomSoftwareSerial/releases/download/V1.0/CustomSoftwareSerial_v1.0.tar.gz) or [v1.0.zip](https://github.com/ledongthuc/CustomSoftwareSerial/releases/download/V1.0/CustomSoftwareSerial_v1.0.zip)
 
 # Install
-
+After downloading the package, follow step in http://www.arduino.cc/en/guide/libraries
 
 # Quick tutorial
 Simple demo to use CustomSoftwareSerial
