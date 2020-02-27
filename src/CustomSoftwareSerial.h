@@ -89,6 +89,8 @@ private:
   volatile uint8_t *_receivePortRegister;
   uint8_t _transmitBitMask;
   volatile uint8_t *_transmitPortRegister;
+  volatile uint8_t *_pcint_maskreg;
+  uint8_t _pcint_maskvalue;
 
   uint16_t _rx_delay_centering;
   uint16_t _rx_delay_intrabit;
@@ -116,6 +118,7 @@ private:
   void tx_pin_write(uint8_t pin_state);
   void setTX(uint8_t transmitPin);
   void setRX(uint8_t receivePin);
+  inline void setRxIntMsk(bool enable);
 
   void setPort(uint16_t configuration);
 
