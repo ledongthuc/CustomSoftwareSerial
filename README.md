@@ -1,4 +1,7 @@
 # CustomSoftwareSerial
+
+[![Built with WeBuild](https://raw.githubusercontent.com/webuild-community/badge/master/svg/WeBuild.svg)](https://webuild.community)
+
 Alternative SoftwareSerial in Arduino. CustomSoftwareSerial library allow you configure and custom parity bit, stop bits and number of data bits. Hope it useful for you.
 
 You can download from  [v1.0.tar.gz](https://github.com/ledongthuc/CustomSoftwareSerial/releases/download/V1.0/CustomSoftwareSerial_v1.0.tar.gz) or [v1.0.zip](https://github.com/ledongthuc/CustomSoftwareSerial/releases/download/V1.0/CustomSoftwareSerial_v1.0.zip)
