@@ -188,6 +188,8 @@ bool CustomSoftwareSerial::listen()
     _receive_buffer_head = _receive_buffer_tail = 0;
     active_object = this;
     SREG = oldSREG;
+
+    setRxIntMsk(true);
     return true;
   }
 
@@ -221,7 +223,10 @@ void CustomSoftwareSerial::recv()
   // If RX line is high, then we don't see any start bit
   // so interrupt is probably not for us
   if (_inverse_logic ? rx_pin_read() : !rx_pin_read())
-  {
+  { 
+    
+    setRxIntMsk(false);
+
     // Wait approximately 1/2 of a bit width to "center" the sample
     tunedDelay(_rx_delay_centering);
     DebugPulse(_DEBUG_PIN2, 1);
@@ -244,12 +249,6 @@ void CustomSoftwareSerial::recv()
         DebugPulse(_DEBUG_PIN2, 1);
     }
 
-    // skip the stop bit
-    for(uint8_t i = 0; i < this->_numberOfStopBit; i ++) {
-        tunedDelay(_rx_delay_stopbit);
-        DebugPulse(_DEBUG_PIN2, 1);
-    }
-
     if (_inverse_logic)
       d = ~d;
 
@@ -267,6 +266,15 @@ void CustomSoftwareSerial::recv()
 #endif
       _buffer_overflow = true;
     }
+
+  // skip the stop bit
+    for(uint8_t i = 0; i < this->_numberOfStopBit; i ++) {
+        tunedDelay(_rx_delay_stopbit);
+        DebugPulse(_DEBUG_PIN2, 1);
+    }
+    
+    // Re-enable interrupts when we're sure to be inside the stop bit
+    setRxIntMsk(true);
   }
 
 #if GCC_VERSION < 40302
@@ -409,8 +417,11 @@ void CustomSoftwareSerial::begin(long speed)
   {
     if (digitalPinToPCICR(_receivePin))
     {
+      //*digitalPinToPCMSK(_receivePin) |= _BV(digitalPinToPCMSKbit(_receivePin));
       *digitalPinToPCICR(_receivePin) |= _BV(digitalPinToPCICRbit(_receivePin));
-      *digitalPinToPCMSK(_receivePin) |= _BV(digitalPinToPCMSKbit(_receivePin));
+
+      _pcint_maskreg = digitalPinToPCMSK(_receivePin);
+      _pcint_maskvalue = _BV(digitalPinToPCMSKbit(_receivePin));
     }
     tunedDelay(_tx_delay); // if we were low this establishes the end
   }
@@ -423,6 +434,14 @@ void CustomSoftwareSerial::begin(long speed)
   listen();
 }
 
+void CustomSoftwareSerial::setRxIntMsk(bool enable)
+{
+    if (enable)
+      *_pcint_maskreg |= _pcint_maskvalue;
+    else
+      *_pcint_maskreg &= ~_pcint_maskvalue;
+}
+
 void CustomSoftwareSerial::begin(long speed, uint16_t configuration) {
     this->setPort(configuration);
     this->begin(speed);
@@ -430,8 +449,14 @@ void CustomSoftwareSerial::begin(long speed, uint16_t configuration) {
 
 void CustomSoftwareSerial::end()
 {
-  if (digitalPinToPCMSK(_receivePin))
-    *digitalPinToPCMSK(_receivePin) &= ~_BV(digitalPinToPCMSKbit(_receivePin));
+
+  if (active_object == this)
+  {
+    setRxIntMsk(false);
+    active_object = NULL;
+    //return true;
+  }
+  //return false;  
 }
 
 
